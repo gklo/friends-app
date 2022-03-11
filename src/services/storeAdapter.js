@@ -20,11 +20,7 @@ export function useFriendStore() {
 
   return {
     ...state,
-    async fetchFriends () {
-      dispatch(fetchFriends())
-    },
-    getFriendById (id) {
-      return selectFriendById(state, id)
-    }
+    fetchFriends: async () => dispatch(fetchFriends()),
+    getFriendById: id => selectFriendById(state, id)
   }
 }
