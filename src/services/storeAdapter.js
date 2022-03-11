@@ -14,7 +14,7 @@ export function useFriendStore() {
   const dispatch = useDispatch()
   const state = useSelector(state => state.friend)
 
-  if (state.status !== 'fulfilled') {
+  if (state.status === 'idle') {
     dispatch(fetchFriends())
   }
 
