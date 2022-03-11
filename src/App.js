@@ -3,9 +3,10 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   Navigate
 } from 'react-router-dom'
+import store from './services/store'
+import { Provider } from 'react-redux'
 
 import ListingPage from './pages/ListingPage'
 import DetailPage from './pages/DetailPage'
@@ -13,13 +14,15 @@ import DetailPage from './pages/DetailPage'
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route index element={<ListingPage />} />
-          <Route path="/detail/:id" element={<DetailPage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route index element={<ListingPage />} />
+            <Route path="/detail/:id" element={<DetailPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      </Provider>
     </div>
   );
 }

@@ -1,8 +1,15 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useFriendStore } from '../services/storeAdapter'
 
-export default function DetailPage() {
+export default function DetailPage () {
   const { id } = useParams()
-  
-  return <>Detail {id}</>
+  const { getFriendById } = useFriendStore()
+  const friend = getFriendById(id)
+
+  return (
+    <>
+      {JSON.stringify(friend, null, 2)}
+    </>
+  )
 }
