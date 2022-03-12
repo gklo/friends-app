@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { List, ListItem, ListItemAvatar, ListItemText, Container, Avatar, Divider, ListItemButton } from '@mui/material'
+import { List, ListItem, ListItemAvatar, ListItemText, Container, Avatar, Divider, ListItemButton, Pagination, CircularProgress } from '@mui/material'
 import { getFullName } from '../domain/friend'
 import { useFriendStore } from '../services/storeAdapter'
 
 export default function ListingPage () {
-  const { friends } = useFriendStore()
+  const { isReady, getFriendsPageCount, getFriendsByPage } = useFriendStore()
   const navigate = useNavigate()
+  const [pageNum, setPageNum] = useState(1)
+  const pageSize = 10
 
   function handleClickItem(id) {
     navigate(`/detail/${id}`)
@@ -17,7 +19,7 @@ export default function ListingPage () {
       <Container>
         <List>
           {
-          friends.map((fd) => (
+          isReady ? getFriendsByPage(pageSize, pageNum).map((fd) => (
             <React.Fragment key={fd.id}>
               <ListItem disablePadding>
                 <ListItemButton alignItems="flex-start" onClick={() => handleClickItem(fd.id)}>
@@ -31,8 +33,11 @@ export default function ListingPage () {
               </ListItem>
               <Divider variant="inset" component="li" />
             </React.Fragment>
-          ))
-        }
+            ))
+            :
+            <CircularProgress />
+          }
+          <Pagination sx={{ mt: 2 }} count={getFriendsPageCount(pageSize)} onChange={(e, num) => setPageNum(num)}></Pagination>
         </List>
       </Container>
       </>
