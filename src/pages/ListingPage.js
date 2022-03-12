@@ -10,7 +10,7 @@ export default function ListingPage () {
   const [pageNum, setPageNum] = useState(1)
   const pageSize = 10
 
-  function handleClickItem(id) {
+  function handleClickItem (id) {
     navigate(`/detail/${id}`)
   }
 
@@ -19,27 +19,31 @@ export default function ListingPage () {
       <Container>
         <List>
           {
-          isReady ? getFriendsByPage(pageSize, pageNum).map((fd) => (
-            <React.Fragment key={fd.id}>
-              <ListItem disablePadding>
-                <ListItemButton alignItems="flex-start" onClick={() => handleClickItem(fd.id)}>
-                  <ListItemAvatar>
-                    <Avatar alt={getFullName(fd)} src={fd.picture} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={getFullName(fd)}
-                    />
-                </ListItemButton>
-              </ListItem>
-              <Divider variant="inset" component="li" />
-            </React.Fragment>
-            ))
-            :
-            <CircularProgress />
-          }
-          <Pagination sx={{ mt: 2 }} count={getFriendsPageCount(pageSize)} onChange={(e, num) => setPageNum(num)}></Pagination>
+          isReady ? 
+            <>
+              {
+                getFriendsByPage(pageSize, pageNum).map((fd) => (
+                  <React.Fragment key={fd.id}>
+                    <ListItem disablePadding>
+                      <ListItemButton alignItems="flex-start" onClick={() => handleClickItem(fd.id)}>
+                        <ListItemAvatar>
+                          <Avatar alt={getFullName(fd)} src={fd.picture} />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={getFullName(fd)}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <Divider variant="inset" component="li" />
+                  </React.Fragment>
+                ))
+              }
+              <Pagination sx={{ mt: 2 }} count={getFriendsPageCount(pageSize)} onChange={(_, num) => setPageNum(num)} />
+            </>
+            : <CircularProgress />
+        }
         </List>
       </Container>
-      </>
+    </>
   )
 }
