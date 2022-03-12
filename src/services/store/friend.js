@@ -4,7 +4,7 @@ import api from '../api'
 
 export const fetchFriends = createAsyncThunk(
   'friends/fetchFriends',
-  async (thunkApi) => {
+  async (_) => {
     const res = await api.get('/')
      
     return { friends: res.data }
