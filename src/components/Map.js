@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
 
-export default function Map ({latitude = 0, longitude = 0, ...props}) {
+export default function Map ({latitude = 0, longitude = 0, zoom = 11, ...props}) {
   const ref = useRef()
   const loader = useMemo(() => {
     return new Loader({
@@ -16,7 +16,7 @@ export default function Map ({latitude = 0, longitude = 0, ...props}) {
           lat: latitude,
           lng: longitude
         },
-        zoom: 11
+        zoom
       })
 
       new google.maps.Marker({
@@ -24,7 +24,7 @@ export default function Map ({latitude = 0, longitude = 0, ...props}) {
         map
       })
     })
-  }, [loader, latitude, longitude])
+  }, [loader, latitude, longitude, zoom])
 
   return <div ref={ref} style={{ height: '500px', width: '100%' }} {...props} />
 }

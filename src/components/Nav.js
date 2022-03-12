@@ -17,7 +17,7 @@ export default function Nav () {
           </IconButton>
         }
         <Typography variant="h6" component="div">
-          { pathname === '/' ? 'Friends' : 'Friend'}
+          { pathname === '/' ? 'Friends' : "Friend's Info"}
         </Typography>
       </Toolbar>
     </Container>
