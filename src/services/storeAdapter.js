@@ -1,6 +1,7 @@
-import { fetchFriends } from './store/friend'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
+import { fetchFriends } from './store/friend'
 
 const selectFriendById = createSelector(
   [
@@ -30,9 +31,9 @@ export function useFriendStore() {
   return {
     ...state,
     get isReady() { return state.status === 'fulfilled' },
-    fetchFriends: async () => dispatch(fetchFriends()),
-    getFriendById: id => selectFriendById(state, id),
-    getFriendsByPage: (size, pageNum) => selectFriendsByPage(state, { size, pageNum }),
-    getFriendsPageCount: count => Math.ceil(state.friends.length / count)
+    fetchFriends: useCallback(() => dispatch(fetchFriends()), [dispatch]),
+    getFriendById: useCallback(id => selectFriendById(state, id), [state]),
+    getFriendsByPage: useCallback((size, pageNum) => selectFriendsByPage(state, { size, pageNum }), [state]),
+    getFriendsPageCount: useCallback(count => Math.ceil(state.friends.length / count), [state])
   }
 }
