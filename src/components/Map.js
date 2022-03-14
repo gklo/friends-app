@@ -1,13 +1,12 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
+
+const loader = new Loader({
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+})
 
 export default function Map ({latitude = 0, longitude = 0, zoom = 11, ...props}) {
   const ref = useRef()
-  const loader = useMemo(() => {
-    return new Loader({
-      apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    });
-  }, [])
 
   useEffect(()=>{
     loader.load().then((google) => {
@@ -24,7 +23,7 @@ export default function Map ({latitude = 0, longitude = 0, zoom = 11, ...props})
         map
       })
     })
-  }, [loader, latitude, longitude, zoom])
+  }, [latitude, longitude, zoom])
 
   return <div ref={ref} style={{ height: '500px', width: '100%' }} {...props} />
 }

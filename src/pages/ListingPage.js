@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { List, ListItem, ListItemAvatar, ListItemText, Container, Avatar, Divider, ListItemButton, Pagination, CircularProgress } from '@mui/material'
 import { getFullName } from '../domain/friend'
@@ -10,9 +10,7 @@ export default function ListingPage () {
   const [pageNum, setPageNum] = useState(1)
   const pageSize = 10
 
-  function handleClickItem (id) {
-    navigate(`/detail/${id}`)
-  }
+  const handlePageChange = useCallback((_ , num) => setPageNum(num), [setPageNum] )
 
   return (
     <>
@@ -24,8 +22,8 @@ export default function ListingPage () {
               {
                 getFriendsByPage(pageSize, pageNum).map((fd) => (
                   <React.Fragment key={fd.id}>
-                    <ListItem disablePadding>
-                      <ListItemButton alignItems="flex-start" onClick={() => handleClickItem(fd.id)}>
+                    <ListItem data-testid="friend-item" disablePadding>
+                      <ListItemButton alignItems="flex-start" onClick={() => navigate(`/detail/${fd.id}`)}>
                         <ListItemAvatar>
                           <Avatar alt={getFullName(fd)} src={fd.picture} />
                         </ListItemAvatar>
@@ -38,7 +36,7 @@ export default function ListingPage () {
                   </React.Fragment>
                 ))
               }
-              <Pagination sx={{ mt: 2 }} count={getFriendsPageCount(pageSize)} onChange={(_, num) => setPageNum(num)} />
+              <Pagination sx={{ mt: 2 }} count={getFriendsPageCount(pageSize)} onChange={handlePageChange} />
             </>
             : <CircularProgress />
         }

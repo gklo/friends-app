@@ -10,17 +10,17 @@ export default function DetailPage () {
   const { id } = useParams()
   const { isReady, getFriendById } = useFriendStore()
   const [friend, setFriend] = useState()
-
-  useEffect(() => isReady && setFriend(getFriendById(id)), [isReady, getFriendById, id])
+  
+  useEffect(() => isReady && setFriend(getFriendById(id)), [isReady, getFriendById, id]) 
 
   return (
     <Container>
       {
       friend ?
         <>
-          <Map latitude={friend.location.latitude} longitude={friend.location.longitude} />
+          <Map data-testid="friend-map" latitude={friend.location.latitude} longitude={friend.location.longitude} />
           <List>
-            <ListItem>
+            <ListItem data-testid="friend-item">
               <ListItemAvatar>
                 <Avatar alt={getFullName(friend)} src={friend.picture}></Avatar>
               </ListItemAvatar>

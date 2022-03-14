@@ -12,7 +12,7 @@ export default function Nav () {
       <Toolbar>
         {
         pathname !== '/' &&
-          <IconButton sx={{ mr: 2 }} onClick={() => navigate('/')}>
+          <IconButton data-testid="back-button" sx={{ mr: 2 }} onClick={() => navigate('/')}>
             <ArrowBack />
           </IconButton>
         }
